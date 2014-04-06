@@ -76,13 +76,17 @@
             clusterTitle = [_secondaryDelegate clusterTitleForMapView:self];
         }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            // use wrapper annotations that expose a MKMapPoint property instead of a CLLocationCoordinate2D property
-            NSMutableArray * mapPointAnnotations = [[NSMutableArray alloc] initWithCapacity:annotations.count];
-            for (id<MKAnnotation> annotation in annotations) {
-                ADMapPointAnnotation * mapPointAnnotation = [[ADMapPointAnnotation alloc] initWithAnnotation:annotation];
-                [mapPointAnnotations addObject:mapPointAnnotation];
-                [mapPointAnnotation release];
-            }
+			NSMutableArray * mapPointAnnotations = (annotations && annotations.count > 0 ?
+													[[NSMutableArray alloc] initWithCapacity:annotations.count] :
+													[[NSMutableArray alloc] init]);
+			if (annotations && annotations.count > 0) {
+				// use wrapper annotations that expose a MKMapPoint property instead of a CLLocationCoordinate2D property
+				for (id<MKAnnotation> annotation in annotations) {
+					ADMapPointAnnotation * mapPointAnnotation = [[ADMapPointAnnotation alloc] initWithAnnotation:annotation];
+					[mapPointAnnotations addObject:mapPointAnnotation];
+					[mapPointAnnotation release];
+				}
+			}
             [_rootMapCluster release];
 
             // Setting visibility of cluster annotations subtitle (defaults to YES)
