@@ -43,6 +43,7 @@
 - (void)setAnnotations:(NSArray *)annotations {
     if (!_isSettingAnnotations) {
         _isSettingAnnotations = YES;
+		_originalAnnotations = [annotations retain];
         NSPredicate * predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary * bindings) {
             return ![evaluatedObject isKindOfClass: [MKUserLocation class]];
         }];

@@ -28,4 +28,5 @@
 - (void)selectClusterAnnotation:(ADClusterAnnotation *)annotation animated:(BOOL)animated;
 - (void)setAnnotations:(NSArray *)annotations;
 @property (nonatomic, readonly) NSArray * displayedAnnotations;
+@property (nonatomic, readonly, strong) NSArray * originalAnnotations;
 @end
